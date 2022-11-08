@@ -27,7 +27,8 @@
     var present_counter = 0,
         null_counter = 0,
         pass_counter = 0,
-        fail_counter = 0;
+        fail_counter = 0,
+        disabled = true;
 
     const UpEval = () => {
         let file_name_ext = xlsx_file.item(0).name;
@@ -109,6 +110,13 @@
                 alert_string =
                     `<p>Có ${present_counter}/40 sinh viên đã đủ thông tin</p>` +
                     `<p>Có ${null_counter}/40 sinh viên thiếu thông tin</p>`;
+                
+                if (present_counter === 40) {
+                    disabled = false;
+                } else {
+                    warn_string =
+                        "<p>Đã kiểm tra xong với vài cột điểm còn thiếu</p>";
+                }
             });
         } else if (file_name_ext === "MauDiem02-MA16301.xlsx") {
             readXlsxFile(xlsx_file.item(0)).then(function (row) {
@@ -166,8 +174,15 @@
                     eval_result_table = eval_result;
                 }
                 alert_string =
-                    `<p>Có ${present_counter}/40 sinh viên đã đủ thông tin</p>` +
-                    `<p>Có ${null_counter}/40 sinh viên thiếu thông tin</p>`;
+                    `<p>Có ${present_counter}/21 sinh viên đã đủ thông tin</p>` +
+                    `<p>Có ${null_counter}/21 sinh viên thiếu thông tin</p>`;
+                
+                if (present_counter === 21) {
+                    disabled = false;
+                } else {
+                    warn_string =
+                        "<p>Đã kiểm tra xong với vài cột điểm còn thiếu</p>";
+                }
             });
         } else {
             readXlsxFile(xlsx_file.item(0)).then(function (row) {
@@ -912,7 +927,7 @@
             application/vnd.ms-excel"
         />
         <Button type="button" on:click={UpEval}>Tải lên và kiểm tra</Button>
-        <Button type="button" on:click={UpCalcPrint}
+        <Button type="button" on:click={UpCalcPrint} {disabled}
             >Tải lên, tính toán và xuất bản</Button
         >
         <FormText color="muted">
