@@ -2,6 +2,7 @@
   import fpl from "./assets/logo-fpt-polytechnic-inkythuatso.svg";
   import Counter from "./lib/Counter.svelte";
   import Importer from "./lib/Importer.svelte";
+  import TableExample from "./lib/TableExample.svelte";
 
   import {
     Styles,
@@ -52,21 +53,29 @@
       <Col>
         <div class="card">
           <h3>How to use</h3>
-          <p class="info">
+          <p class="info-p">
             Nhập bảng điểm dưới đuôi tệp XLSX và nhấn "Tải lên và kiểm tra" để kiểm tra ô trống.
             (Chỉ sử đụng được chức năng trên cho 1 số bảng.)
           </p>
-          <p class="info">
+          <p class="info-p">
             Khi bạn đã kiểm tra xong, nếu bạn nhập đầy đủ số điểm, bạn có thể yêu cầu hệ thống tính toán và xuất kết quả.
             Chỉ cần bạn nhấn "Tải lên, tính toán và xuất bản" và chờ kết quả cuối cùng. 
             (Chỉ sử đụng được chức năng trên cho 1 số bảng.)
           </p>
-          <p class="info">
-            Cảnh báo: Kết quả tính toán trong hệ thống sử dụng mã nhị phân cho nên sẽ không chính xác.
-            Bạn nên tính toán lại bằng hệ thập phân để nâng cao độ chính xác.
-            Không nên nhấn "Tải lên, tính toán và xuất bản" khi trong bảng có giá trị trống. 
-            Hệ thống sẽ gặp lỗi tính toán, cho nên trong bảng phải có đủ giá trị mới có thể tính toán được.
-          </p>
+          <TableExample />
+          <h4 class="info-t">Cảnh báo khi sử dụng tiện ích trên:</h4>
+          <ol class="info-l">
+            <li>
+              Kết quả tính toán trong hệ thống sử dụng mã nhị phân cho nên sẽ
+              không chính xác. Bạn nên tính toán lại bằng hệ thập phân để nâng
+              cao độ chính xác.
+            </li>
+            <li>
+              Không nên nhấn "Tải lên, tính toán và xuất bản" khi trong bảng có
+              giá trị trống. Hệ thống sẽ gặp lỗi tính toán, cho nên trong bảng
+              phải có đủ giá trị mới có thể tính toán được.
+            </li>
+          </ol>
           <Counter />
         </div>
       </Col>
@@ -78,6 +87,13 @@
   </p>
 
   <p class="read-the-docs">Bản quyền thuộc về FPT Polytechnic</p>
+  
+  <p class="read-the-docs">Framework JavaScript được sử dụng: Svelte v3</p>
+
+  <p class="read-the-docs">
+    Plugin được sử dụng: read-excel-file bởi Nikolay Kuchumov, ExcelJS bởi
+    Guyonroche, file-saver bởi eligrey
+  </p>
 </main>
 
 <style>
@@ -92,9 +108,23 @@
   .logo.fpl:hover {
     filter: drop-shadow(0 0 2em #f56e23);
   }
-  .info {
-    padding-top: 12px;
-    padding-bottom: 12px;
+  .info-p {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+  .info-t{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: justify;
+    text-justify: inter-character;
+  }
+  .info-l {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: justify;
+    text-justify: inter-word;
   }
   .read-the-docs {
     padding-top: 6px;
