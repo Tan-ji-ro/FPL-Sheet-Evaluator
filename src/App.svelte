@@ -71,9 +71,9 @@
               cao độ chính xác.
             </li>
             <li>
-              Không nên nhấn "Tải lên, tính toán và xuất bản" khi trong bảng có
-              giá trị trống. Hệ thống sẽ gặp lỗi tính toán, cho nên trong bảng
-              phải có đủ giá trị mới có thể tính toán được.
+              Nếu thông tin trong bảng còn thiếu, hệ thống sẽ tiếp tục vô hiệu hóa
+              nút "Tải lên, tính toán và xuất bản" cho đến khi toàn bộ thông tin đã
+              được ghi đầy đủ để đảm bảo an toàn cho chức năng tính toán. 
             </li>
           </ol>
           <Counter />
