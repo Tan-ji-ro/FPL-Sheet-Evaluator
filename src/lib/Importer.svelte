@@ -918,7 +918,7 @@
 
 <Form>
     <FormGroup method="get" class="reader">
-        <Label for="exampleFile">Put your Excel file here</Label>
+        <Label for="exampleFile">Nhập file Excel tại đây</Label>
         <Input
             type="file"
             id="xlsx"
