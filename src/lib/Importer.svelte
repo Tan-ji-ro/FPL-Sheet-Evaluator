@@ -20,6 +20,18 @@
     import * as Excel from "exceljs";
     import fileSaver from "file-saver";
 
+    import {
+        Chart,
+        Title,
+        Tooltip,
+        Legend,
+        ArcElement,
+        CategoryScale,
+    } from "chart.js";
+    import { Pie } from "svelte-chartjs";
+
+    Chart.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
+
     let xlsx_file, warn_string, alert_string;
     var eval_result_table = [],
         calc_result_table = [],
@@ -998,6 +1010,26 @@
                 {/each}
             </tbody>
         </Table>
+        <CardText>Thống kê tính toán</CardText>
+        <div class="chart">
+            <Pie
+                data={{
+                    labels: ["Đủ điều kiện", "Không đủ điều kiện"],
+                    datasets: [
+                        {
+                            label: "Số lượng học sinh đủ/không đủ điều kiện thi",
+                            data: [pass_counter, fail_counter],
+                            backgroundColor: [
+                                "rgb(54, 162, 235)",
+                                "rgb(255, 99, 132)",
+                            ],
+                            hoverOffset: 4,
+                        },
+                    ],
+                }}
+                options={{ responsive: false }}
+            />
+        </div>
     </CardBody>
     <CardFooter>Đoạn cuối của thẻ</CardFooter>
 </Card>
