@@ -52,7 +52,7 @@
       </Col>
       <Col>
         <div class="card">
-          <h3>How to use</h3>
+          <h3>Cách sử dụng</h3>
           <p class="info-p">
             Nhập bảng điểm dưới đuôi tệp XLSX và nhấn "Tải lên và kiểm tra" để kiểm tra ô trống.
             (Chỉ sử đụng được chức năng trên cho 1 số bảng.)
@@ -92,7 +92,7 @@
 
   <p class="read-the-docs">
     Plugin được sử dụng: read-excel-file bởi Nikolay Kuchumov, ExcelJS bởi
-    Guyonroche, file-saver bởi eligrey
+    Guyonroche, file-saver bởi eligrey, ChartJS, Svelte-ChartJS bởi Saurav Kanchan
   </p>
 </main>
 
