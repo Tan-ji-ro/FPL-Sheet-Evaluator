@@ -1,8 +1,5 @@
 <script>
     import {
-        Form,
-        FormGroup,
-        FormText,
         Input,
         Label,
         Button,
@@ -920,95 +917,93 @@
     }
 </script>
 
-<Form>
-    <FormGroup>
-        <Label for="exampleFile">Nhập file Excel tại đây</Label>
-        <Input type="file" bind:files={xlsx_file}/>
-        <Button on:click={UpEval}>Tải lên và kiểm tra</Button>
-        <Button on:click={UpCalcPrint} {disabled}
-            >Tải lên, tính toán và xuất bản</Button
-        >
-        <FormText>
-            Tùy theo bảng mà bạn nhập, hệ thống sẽ kiểm tra và tính toán một
-            cách linh hoạt theo bảng trên.
-        </FormText>
-    </FormGroup>
-</Form>
+<Label for="exampleFile">Nhập file Excel tại đây</Label>
+<Input type="file" bind:files={xlsx_file} /> <br />
+<Button on:click={UpEval}>Tải lên và kiểm tra</Button> <br />
+<Button on:click={UpCalcPrint} {disabled}>Tải lên, tính toán và xuất bản</Button
+> <br />
+<p>
+    Tùy theo bảng mà bạn nhập, hệ thống sẽ kiểm tra và tính toán một cách linh
+    hoạt theo bảng trên.
+</p>
+
 <Card>
     <CardHeader>
-      <CardTitle>Thẻ kiểm tra tiến độ</CardTitle>
+        <CardTitle>Thẻ kiểm tra tiến độ</CardTitle>
     </CardHeader>
     <CardBody>
-      <CardSubtitle>Các bạn kiểm tra tiến độ tại đây.</CardSubtitle>
-      <CardText>Bảng kết quả kiểm tra</CardText>
-      <Table>
-        <thead>
-          <tr>
-            {#each Object.keys(eval_result_table[0] || {}) as table_header}
-              <th>{table_header}</th>
-            {:else}
-              <th>Cảnh báo</th>
-            {/each}
-          </tr>
-        </thead>
-        <tbody>
-          {#each Object.values(eval_result_table) as row}
-            <tr>
-              {#each Object.values(row) as cell}
-                <td>{cell}</td>
-              {:else}
-                <td>Không có thông tin xuất hiện</td>
-              {/each}
-            </tr>
-          {/each}
-        </tbody>
-      </Table>
-      <CardText>Phần cảnh báo</CardText>
-      <div contenteditable="true" bind:innerHTML={warn_string}>
-        <p>Không có cảnh báo nào</p>
-      </div>
-      <CardText>Phần tổng quát</CardText>
-      <CardText>
-        <div class="summary_content">
-          <ul contenteditable="true" bind:innerHTML={alert_string}></ul>
+        <CardSubtitle>Các bạn kiểm tra tiến độ tại đây.</CardSubtitle>
+        <CardText>Bảng kết quả kiểm tra</CardText>
+        <Table>
+            <thead>
+                <tr>
+                    {#each Object.keys(eval_result_table[0] || {}) as table_header}
+                        <th>{table_header}</th>
+                    {:else}
+                        <th>Cảnh báo</th>
+                    {/each}
+                </tr>
+            </thead>
+            <tbody>
+                {#each Object.values(eval_result_table) as row}
+                    <tr>
+                        {#each Object.values(row) as cell}
+                            <td>{cell}</td>
+                        {:else}
+                            <td>Không có thông tin xuất hiện</td>
+                        {/each}
+                    </tr>
+                {/each}
+            </tbody>
+        </Table>
+        <CardText>Phần cảnh báo</CardText>
+        <div contenteditable="true" bind:innerHTML={warn_string}>
+            <p>Không có cảnh báo nào</p>
         </div>
-      </CardText>
-      <CardText>Bảng kết quả tính toán</CardText>
-      <Table>
-        <thead>
-          <tr>
-            {#each Object.keys(calc_result_table[0] || {}) as table_header}
-              <th>{table_header}</th>
-            {:else}
-              <th>Cảnh báo</th>
-            {/each}
-          </tr>
-        </thead>
-        <tbody>
-          {#each Object.values(calc_result_table) as row}
-            <tr>
-              {#each Object.values(row) as cell}
-                <td>{cell}</td>
-              {:else}
-                <td>Không có thông tin xuất hiện</td>
-              {/each}
-            </tr>
-          {/each}
-        </tbody>
-      </Table>
-      <CardText>Thống kê tính toán</CardText>
-      <div use:chart={{
-        chart: {
-          type: "pie",
-        },
-        series: [pass_counter, fail_counter],
-        labels: ['Học sinh đỗ', 'Học sinh tạch'],
-        plotOptions: {
-          pie: {
-            customScale: 0.5,
-          },
-        },
-      }}> </div>
+        <CardText>Phần tổng quát</CardText>
+        <CardText>
+            <div class="summary_content">
+                <ul contenteditable="true" bind:innerHTML={alert_string}></ul>
+            </div>
+        </CardText>
+        <CardText>Bảng kết quả tính toán</CardText>
+        <Table>
+            <thead>
+                <tr>
+                    {#each Object.keys(calc_result_table[0] || {}) as table_header}
+                        <th>{table_header}</th>
+                    {:else}
+                        <th>Cảnh báo</th>
+                    {/each}
+                </tr>
+            </thead>
+            <tbody>
+                {#each Object.values(calc_result_table) as row}
+                    <tr>
+                        {#each Object.values(row) as cell}
+                            <td>{cell}</td>
+                        {:else}
+                            <td>Không có thông tin xuất hiện</td>
+                        {/each}
+                    </tr>
+                {/each}
+            </tbody>
+        </Table>
+        <CardText>Thống kê tính toán</CardText>
+        <div
+            use:chart={{
+                chart: {
+                    type: "pie",
+                },
+                series: [pass_counter, fail_counter],
+                labels: ["Học sinh đỗ", "Học sinh tạch"],
+                plotOptions: {
+                    pie: {
+                        customScale: 0.5,
+                    },
+                },
+            }}
+        ></div>
     </CardBody>
     <CardFooter>Đoạn cuối của thẻ</CardFooter>
-  </Card>
+</Card>
