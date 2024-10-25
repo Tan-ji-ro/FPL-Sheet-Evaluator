@@ -1,5 +1,4 @@
 <script>
-    // @ts-nocheck
     import {
         Form,
         FormGroup,
@@ -21,19 +20,11 @@
     import * as Excel from "exceljs";
     import fileSaver from "file-saver";
 
-    import {
-        Chart,
-        Title,
-        Tooltip,
-        Legend,
-        ArcElement,
-        CategoryScale,
-    } from "chart.js";
-    import { Pie } from "svelte-chartjs";
+    import { chart } from "svelte-apexcharts";
 
-    Chart.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
-
-    let xlsx_file = $state(), warn_string = $state(), alert_string = $state();
+    let xlsx_file = $state(new DataTransfer().files),
+        warn_string = $state(),
+        alert_string = $state();
     var eval_result_table = $state([]),
         calc_result_table = $state([]),
         calc_result_table_redacted = [];
@@ -123,7 +114,7 @@
                 alert_string =
                     `<p>Có ${present_counter}/40 sinh viên đã đủ thông tin</p>` +
                     `<p>Có ${null_counter}/40 sinh viên thiếu thông tin</p>`;
-                
+
                 if (present_counter === 40) {
                     disabled = false;
                 } else {
@@ -189,7 +180,7 @@
                 alert_string =
                     `<p>Có ${present_counter}/21 sinh viên đã đủ thông tin</p>` +
                     `<p>Có ${null_counter}/21 sinh viên thiếu thông tin</p>`;
-                
+
                 if (present_counter === 21) {
                     disabled = false;
                 } else {
@@ -253,7 +244,7 @@
                             (table_string[col][18] * 4) / 100 +
                             (table_string[col][19] * 4) / 100 +
                             (table_string[col][20] * 4) / 100
-                        ).toFixed(2)
+                        ).toFixed(2),
                     );
                     res_array_60.push(((res_array[col] * 100) / 60).toFixed(2));
                 }
@@ -680,11 +671,11 @@
                     .then((buffer) =>
                         fileSaver.saveAs(
                             new Blob([buffer]),
-                            `IT17301_${Date.now()}_calc_print_result.xlsx`
-                        )
+                            `IT17301_${Date.now()}_calc_print_result.xlsx`,
+                        ),
                     )
                     .catch((err) =>
-                        console.log("Error printing excel export", err)
+                        console.log("Error printing excel export", err),
                     );
             });
         } else if (file_name_ext === "MauDiem02-MA16301.xlsx") {
@@ -706,7 +697,7 @@
                             (table_string[col][5] * 14) / 100 +
                             (table_string[col][6] * 14) / 100 +
                             (table_string[col][7] * 12) / 100
-                        ).toFixed(2)
+                        ).toFixed(2),
                     );
                     res_array_60.push(((res_array[col] * 100) / 60).toFixed(2));
                 }
@@ -912,11 +903,11 @@
                     .then((buffer) =>
                         fileSaver.saveAs(
                             new Blob([buffer]),
-                            `MA16301_${Date.now()}_calc_print_result.xlsx`
-                        )
+                            `MA16301_${Date.now()}_calc_print_result.xlsx`,
+                        ),
                     )
                     .catch((err) =>
-                        console.log("Error printing excel export", err)
+                        console.log("Error printing excel export", err),
                     );
             });
         } else {
@@ -930,20 +921,14 @@
 </script>
 
 <Form>
-    <FormGroup method="get" class="reader">
+    <FormGroup>
         <Label for="exampleFile">Nhập file Excel tại đây</Label>
-        <Input
-            type="file"
-            id="xlsx"
-            bind:files={xlsx_file}
-            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, 
-            application/vnd.ms-excel"
-        />
-        <Button type="button" on:click={UpEval}>Tải lên và kiểm tra</Button>
-        <Button type="button" on:click={UpCalcPrint} {disabled}
+        <Input type="file" bind:files={xlsx_file}/>
+        <Button on:click={UpEval}>Tải lên và kiểm tra</Button>
+        <Button on:click={UpCalcPrint} {disabled}
             >Tải lên, tính toán và xuất bản</Button
         >
-        <FormText color="muted">
+        <FormText>
             Tùy theo bảng mà bạn nhập, hệ thống sẽ kiểm tra và tính toán một
             cách linh hoạt theo bảng trên.
         </FormText>
@@ -951,86 +936,79 @@
 </Form>
 <Card>
     <CardHeader>
-        <CardTitle>Thẻ kiểm tra tiến độ</CardTitle>
+      <CardTitle>Thẻ kiểm tra tiến độ</CardTitle>
     </CardHeader>
     <CardBody>
-        <CardSubtitle>Các bạn kiểm tra tiến độ tại đây.</CardSubtitle>
-        <CardText>Bảng kết quả kiểm tra</CardText>
-        <Table>
-            <thead>
-                <tr>
-                    {#each Object.keys(eval_result_table[0] || {}) as table_header}
-                        <th>{table_header}</th>
-                    {:else}
-                        <p>Không có thông tin xuất hiện</p>
-                    {/each}
-                </tr>
-            </thead>
-            <tbody>
-                {#each Object.values(eval_result_table) as row}
-                    <tr>
-                        {#each Object.values(row) as cell}
-                            <td>{cell}</td>
-                        {:else}
-                            <p>Không có thông tin xuất hiện</p>
-                        {/each}
-                    </tr>
-                {/each}
-            </tbody>
-        </Table>
-        <CardText>Phần cảnh báo</CardText>
-        <div contenteditable="true" bind:innerHTML={warn_string}>
-            <p>Không có cảnh báo nào</p>
+      <CardSubtitle>Các bạn kiểm tra tiến độ tại đây.</CardSubtitle>
+      <CardText>Bảng kết quả kiểm tra</CardText>
+      <Table>
+        <thead>
+          <tr>
+            {#each Object.keys(eval_result_table[0] || {}) as table_header}
+              <th>{table_header}</th>
+            {:else}
+              <th>Cảnh báo</th>
+            {/each}
+          </tr>
+        </thead>
+        <tbody>
+          {#each Object.values(eval_result_table) as row}
+            <tr>
+              {#each Object.values(row) as cell}
+                <td>{cell}</td>
+              {:else}
+                <td>Không có thông tin xuất hiện</td>
+              {/each}
+            </tr>
+          {/each}
+        </tbody>
+      </Table>
+      <CardText>Phần cảnh báo</CardText>
+      <div contenteditable="true" bind:innerHTML={warn_string}>
+        <p>Không có cảnh báo nào</p>
+      </div>
+      <CardText>Phần tổng quát</CardText>
+      <CardText>
+        <div class="summary_content">
+          <ul contenteditable="true" bind:innerHTML={alert_string}></ul>
         </div>
-        <CardText>Phần tổng quát</CardText>
-        <CardText class="summary">
-            <div class="summary_content">
-                <ul contenteditable="true" bind:innerHTML={alert_string}></ul>
-            </div>
-        </CardText>
-        <CardText>Bảng kết quả tính toán</CardText>
-        <Table>
-            <thead>
-                <tr>
-                    {#each Object.keys(calc_result_table[0] || {}) as table_header}
-                        <th>{table_header}</th>
-                    {:else}
-                        <p>Không có thông tin xuất hiện</p>
-                    {/each}
-                </tr>
-            </thead>
-            <tbody>
-                {#each Object.values(calc_result_table) as row}
-                    <tr>
-                        {#each Object.values(row) as cell}
-                            <td>{cell}</td>
-                        {:else}
-                            <p>Không có thông tin xuất hiện</p>
-                        {/each}
-                    </tr>
-                {/each}
-            </tbody>
-        </Table>
-        <CardText>Thống kê tính toán</CardText>
-        <div class="chart">
-            <Pie
-                data={{
-                    labels: ["Đủ điều kiện", "Không đủ điều kiện"],
-                    datasets: [
-                        {
-                            label: "Số lượng học sinh đủ/không đủ điều kiện thi",
-                            data: [pass_counter, fail_counter],
-                            backgroundColor: [
-                                "rgb(54, 162, 235)",
-                                "rgb(255, 99, 132)",
-                            ],
-                            hoverOffset: 4,
-                        },
-                    ],
-                }}
-                options={{ responsive: false }}
-            />
-        </div>
+      </CardText>
+      <CardText>Bảng kết quả tính toán</CardText>
+      <Table>
+        <thead>
+          <tr>
+            {#each Object.keys(calc_result_table[0] || {}) as table_header}
+              <th>{table_header}</th>
+            {:else}
+              <th>Cảnh báo</th>
+            {/each}
+          </tr>
+        </thead>
+        <tbody>
+          {#each Object.values(calc_result_table) as row}
+            <tr>
+              {#each Object.values(row) as cell}
+                <td>{cell}</td>
+              {:else}
+                <td>Không có thông tin xuất hiện</td>
+              {/each}
+            </tr>
+          {/each}
+        </tbody>
+      </Table>
+      <CardText>Thống kê tính toán</CardText>
+      <div use:chart={{
+        chart: {
+          type: "pie",
+        },
+        series: [pass_counter, fail_counter],
+        labels: ['Học sinh đỗ', 'Học sinh tạch'],
+        plotOptions: {
+          pie: {
+            customScale: 0.5,
+          },
+        },
+      }}> </div>
     </CardBody>
     <CardFooter>Đoạn cuối của thẻ</CardFooter>
-</Card>
+  </Card>

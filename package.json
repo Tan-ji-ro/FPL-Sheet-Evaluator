@@ -15,12 +15,13 @@
     "vite": "^5.4.4"
   },
   "dependencies": {
+    "apexcharts": "^3.54.1",
     "chart.js": "^3.9.1",
     "exceljs": "^4.3.0",
     "file-saver": "^2.0.5",
     "read-excel-file": "^5.5.3",
     "readable-web-to-node-stream": "^3.0.2",
-    "svelte-chartjs": "^3.1.0",
+    "svelte-apexcharts": "^1.0.2",
     "write-excel-file": "^1.4.15",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.18.12/xlsx-0.18.12.tgz"
   }
