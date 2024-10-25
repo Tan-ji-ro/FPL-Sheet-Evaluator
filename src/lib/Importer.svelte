@@ -33,15 +33,15 @@
 
     Chart.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
 
-    let xlsx_file, warn_string, alert_string;
-    var eval_result_table = [],
-        calc_result_table = [],
+    let xlsx_file = $state(), warn_string = $state(), alert_string = $state();
+    var eval_result_table = $state([]),
+        calc_result_table = $state([]),
         calc_result_table_redacted = [];
     var present_counter = 0,
         null_counter = 0,
-        pass_counter = 0,
-        fail_counter = 0,
-        disabled = true;
+        pass_counter = $state(0),
+        fail_counter = $state(0),
+        disabled = $state(true);
 
     const UpEval = () => {
         let file_name_ext = xlsx_file.item(0).name;
@@ -985,7 +985,7 @@
         <CardText>Phần tổng quát</CardText>
         <CardText class="summary">
             <div class="summary_content">
-                <ul contenteditable="true" bind:innerHTML={alert_string} />
+                <ul contenteditable="true" bind:innerHTML={alert_string}></ul>
             </div>
         </CardText>
         <CardText>Bảng kết quả tính toán</CardText>

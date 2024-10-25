@@ -22,7 +22,7 @@
 
   <div>
     <Navbar color="light" light expand="sm">
-      <NavbarBrand href="https://caodang.fpt.edu.vn/" target="_blank">
+      <NavbarBrand href="https://caodang.fpt.edu.vn/">
         <img src={fpl} class="logo fpl" alt="FPL Logo" />
       </NavbarBrand>
       <Nav navbar>
