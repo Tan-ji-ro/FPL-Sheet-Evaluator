@@ -1,4 +1,6 @@
 <script>
+  // @ts-nocheck
+
   import fpl from "./assets/logo-fpt-polytechnic-inkythuatso.svg";
   import Counter from "./lib/Counter.svelte";
   import Importer from "./lib/Importer.svelte";
@@ -22,7 +24,7 @@
 
   <div>
     <Navbar color="light" light expand="sm">
-      <NavbarBrand href="https://caodang.fpt.edu.vn/">
+      <NavbarBrand href="https://caodang.fpt.edu.vn/" target="_blank">
         <img src={fpl} class="logo fpl" alt="FPL Logo" />
       </NavbarBrand>
       <Nav navbar>
